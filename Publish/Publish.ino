@@ -1,5 +1,5 @@
 /*
- * MQTT Publisher using ESP8266 AT Instruction Set
+ * MQTT Publisher using XBee WiFi radio module
  *  
  * for ATmega328
  * XBeeWiFi----------ATmega328
