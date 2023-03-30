@@ -529,13 +529,6 @@ void loop() {
     Serial.print(payload);
     Serial.println("]");
   }
-#if 0
-  while (_SERIAL_.available()) {
-    unsigned char c = _SERIAL_.read();
-    Serial.print("c=0x");
-    Serial.println(c, HEX);
-  }
-#endif
 
   mqttPingreq();
 }
