@@ -2,7 +2,7 @@
 MQTT Applicaton for Arduino using XBee-WiFi Module. 
 
 The XBee module has three wireless systems: ZigBee/WiFi/IEEE 802.15.4.   
-This project uses Wi-Fi wireless method.   
+This project uses Wi-Fi wireless system.   
 ![Xbee-Modue](https://user-images.githubusercontent.com/6020549/228780419-e6623881-1a44-4087-b9a6-f3be927e5c04.JPG)
 
 # Memory usage
