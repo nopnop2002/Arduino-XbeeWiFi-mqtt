@@ -40,6 +40,7 @@ Global variables use 581 bytes (28%) of dynamic memory, leaving 1467 bytes for l
 
 # Software requirements   
 - XCTU    
+ This is the XBee module setup tool.   
  You can download from [here](https://hub.digi.com/support/products/xctu/?path=/support/asset/).   
 
 - Arduino Environment   
