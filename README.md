@@ -128,4 +128,4 @@ XBee WiFi(Rx) - STM32F407(PA2)
 Serial printing goes to PA9.   
 
 # Setup XBee Module   
-See here.   
+See [here](https://github.com/nopnop2002/Arduino-XbeeWiFi-mqtt/tree/main/Setup).   
