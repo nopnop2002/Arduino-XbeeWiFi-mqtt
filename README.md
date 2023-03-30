@@ -39,6 +39,9 @@ Global variables use 581 bytes (28%) of dynamic memory, leaving 1467 bytes for l
 ![xbee-arduino-1](https://user-images.githubusercontent.com/6020549/228780907-5c8457e1-30cb-4bec-af40-a8a2353fc585.JPG)
 
 # Software requirements   
+- XCTU    
+ You can download from [here](https://hub.digi.com/support/products/xctu/?path=/support/asset/).   
+
 - Arduino Environment   
 
 - Core library is required when using STM32.   
