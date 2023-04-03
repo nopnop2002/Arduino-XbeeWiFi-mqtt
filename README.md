@@ -36,6 +36,8 @@ Global variables use 581 bytes (28%) of dynamic memory, leaving 1467 bytes for l
 - XBee WiFi module like XBee S6B   
 
 - Base board like this   
+ The RX of this baseboard is connected to the TX of the XBee, and the TX to the RX.   
+ So this baseboard's RX pin connects with MCU's RX, and TX pin connects with MCU's TX.   
 ![xbee-arduino-1](https://user-images.githubusercontent.com/6020549/228780907-5c8457e1-30cb-4bec-af40-a8a2353fc585.JPG)
 
 # Software requirements   
