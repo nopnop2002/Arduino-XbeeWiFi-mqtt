@@ -113,7 +113,6 @@ HardwareSerial Serial1(PA10, PA9); // RX, TX
 #define MQTT_KEEP_ALIVE 60                     // Pingreq Interval[Sec]
 #define MQTT_WILL_TOPIC "/XBEE-MQTT/"          // Will Topic
 #define MQTT_WILL_MSG   "I am leaving..."      // Will Payload
-#define MQTT_CLIENT_ID  "Arduino"              // MQTT Client ID
 #define _DEBUG_         0                      // for Debug
 
 // Last Packet Send Time (MilliSecond)
@@ -251,27 +250,32 @@ int getResponse(unsigned char *buf, int timeout){
 int executeAT(char * cmd, unsigned char *buf, int timeout) {
   unsigned char c;
   unsigned char wk[16];
+  int wk_len;
   unsigned char ok[3];
   ok[0] = 0x4F; // O
   ok[1] = 0x4B; // K
   ok[2] = 0x0D;
-  
-  Serial.print("+++ ----> ");
-  _SERIAL_.write("+++");
-  int wk_len = getResponse(wk, timeout);
-  if (wk_len != 3) {
+
+  bool apmode = false;
+  for (int retry=0;retry<3;retry++) {
+    Serial.print("+++ ----> ");
+    _SERIAL_.write("+++");
+    delay(100);
+    wk_len = getResponse(wk, timeout);
+    if (wk_len == 3) {
+      if (strncmp((char*)wk, (char*)ok, 3) == 0) {
+        Serial.println("OK");
+        apmode = true;
+        break;
+      }
+    }
     Serial.println("NG");
     Serial.print("wk_len=");
     Serial.println(wk_len);
-    return 0;
+    delay(100);
   }
-  if (strncmp((char*)wk, (char*)ok, 3) != 0) {
-    Serial.println("NG");
-    Serial.println((char*)wk);
-    return 0;
-  }
-  Serial.println("OK");
-
+  if (apmode == false) return 0;
+ 
   Serial.print(cmd);
   Serial.print(" ----> ");
   int cmd_len = strlen(cmd);
@@ -406,7 +410,7 @@ void setup() {
   Serial.begin(115200);
   _SERIAL_.begin(9600);
 
-  //query my IP address
+  //Query my IP address
   Serial.println();
   int resp_len = executeAT("ATMY", resp, 1000);
   if (resp_len == 0) {
@@ -417,9 +421,24 @@ void setup() {
   Serial.print((char *)resp);
   Serial.println("]");
 
+  //Query my MAC Low address
+  Serial.println();
+  resp_len = executeAT("ATSL", resp, 1000);
+  if (resp_len == 0) {
+    Serial.println("Can't get MAC address. Check wiring.");
+    while(1);
+  }
+  Serial.print("My MAC Low Address is [");
+  Serial.print((char *)resp);
+  Serial.println("]");
+
+  //Set Cient ID
+  char mqtt_client_id[10];
+  strcpy(mqtt_client_id, (char*)resp);
+
   //Client requests a connection to a server
   Serial.print("MQTT CONNECT.....");
-  packet_size = buildConnect(packet, MQTT_KEEP_ALIVE, MQTT_CLIENT_ID, MQTT_WILL_TOPIC, MQTT_WILL_MSG);
+  packet_size = buildConnect(packet, MQTT_KEEP_ALIVE, mqtt_client_id, MQTT_WILL_TOPIC, MQTT_WILL_MSG);
   if (_DEBUG_) hexDump(packet, packet_size);
   _SERIAL_.write(packet, packet_size);
 
