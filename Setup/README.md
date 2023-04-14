@@ -51,12 +51,14 @@ Change:
 - IP Protocol-->TCP   
 - TCP Client Connection Timeout-->FFFF   
 - Destination IP Address-->54.87.92.106   
+- Source Post-->75b(=1883)
+- Destination Port-->75b(=1883)
 
 TCP ClientConnection Timeout is the idle time before a TCP client closes a connection with a server.   
 If it is not set long, the TCP connection cannot be maintained.   
 Write changes to the module with the pen icon.   
 ![xctu-mqtt-1](https://user-images.githubusercontent.com/6020549/228785187-6f94f089-4c4b-4e74-86a5-36eea1be1812.jpg)
-![xctu-mqtt-2](https://user-images.githubusercontent.com/6020549/228785193-37fde8de-b306-4f2d-9e1b-dabdb7a74cfd.jpg)
+![xctu-mqtt-2](https://user-images.githubusercontent.com/6020549/231981298-4914462c-848a-415c-8dff-8e40ef361452.jpg)
 
 Exit XCTU.   
 
