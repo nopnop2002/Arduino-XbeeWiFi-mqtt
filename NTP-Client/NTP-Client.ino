@@ -248,7 +248,7 @@ bool isResponce(char *packet) {
     if (_DEBUG_) Serial.println(c, HEX);
     if (stat == 0) {
       if (c == 0x24) {
-        Serial.println("Start packet");
+        //Serial.println("Start packet");
         _packet[0] = c;
         stat = 1;
       }
