@@ -5,8 +5,9 @@ NTP-Client Applicaton for Arduino using XBee-WiFi Module.
 Use XCTU to change:   
 - IP Protocol-->UDP   
 - TCP Client Connection Timeout-->64   
-- Destination IP Address-->133.243.238.163   
+- Destination IP Address-->133.243.238.163(*1)   
 - Source Post-->7b(=123)   
 - Destination Port-->7b(=123)   
 
+(*1)   
 There are several public NTP servers, so choose the one you like.   
