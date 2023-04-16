@@ -5,118 +5,139 @@
  * XBeeWiFi----------ATmega328
  * TX      ----------RX(D2)
  * RX      ----------TX(D3)
+ * RESET   ----------D4
  * 
  * for ATmega2560
  * XBeeWiFi----------ATmega2560
  * TX      ----------RX(D19)
  * RX      ----------TX(D18)
+ * RESET   ----------D4
  * 
  * for STM32 F103 MAPLE Core
  * XBeeWiFi----------STM32
  * TX      ----------RX(PA3)
  * RX      ----------TX(PA2)
+ * RESET   ----------PA4
  * 
  * for STM32 BlackPill/BluePill ST Core
  * XBeeWiFi----------STM32
  * TX      ----------RX(PA3)
  * RX      ----------TX(PA2)
+ * RESET   ----------PA4
  * 
  * for STM32 Generic F103 ST Core
  * XBeeWiFi----------STM32
  * TX      ----------RX(PA10)
  * RX      ----------TX(PA9)
+ * RESET   ----------PA11
  * 
  * for STM32 F303 BLACKPILL ST Core
  * XBeeWiFi----------STM32
  * TX      ----------RX(PA3)
  * RX      ----------TX(PA2)
+ * RESET   ----------PA4
  * 
  * for STM32 F401 BLACKPILL ST Core
  * XBeeWiFi----------STM32
  * TX      ----------RX(PA3)
  * RX      ----------TX(PA2)
+ * RESET   ----------PA4
  * 
  * for STM32 F4DISC1 ST Core
  * XBeeWiFi----------STM32
- * TX      ----------RX(PD9)
- * RX      ----------TX(PD8)
+ * TX      ----------RX(PB6)
+ * RX      ----------TX(PB7)
+ * RESET   ----------PB8
  * 
  * for STM32 F407VE/F407VG ST Core
  * XBeeWiFi----------STM32
  * TX      ----------RX(PA3)
  * RX      ----------TX(PA2)
+ * RESET   ----------PA4
  * 
  * for STM32 NUCLEO64 ST Core
  * XBeeWiFi----------STM32
  * TX      ----------RX(PA10)
  * RX      ----------TX(PA9)
+ * RESET   ----------PA11
  * 
  */
- 
+
 //for Arduino UNO(ATmega328)
 #if defined(__AVR_ATmega328__)  || defined(__AVR_ATmega328P__)
 #include <SoftwareSerial.h>
-#define SERIAL_RX       2
-#define SERIAL_TX       3
-SoftwareSerial Serial2(SERIAL_RX, SERIAL_TX); // RX, TX
+#define _SERIAL_RX      2
+#define _SERIAL_TX      3
+#define _RESET          4
+SoftwareSerial Serial2(_SERIAL_RX, _SERIAL_TX); // RX, TX
 #define _SERIAL_        Serial2
 #define _MODEL_         "ATmega328"
 
 //for Arduino MEGA(ATmega2560)
 #elif defined(__AVR_ATmega2560__)
+#define _RESET          4
 #define _SERIAL_        Serial1
 #define _MODEL_         "ATmega2560"
 
 //for STM32F103(MAPLE Core)
 #elif defined(__STM32F1__)
+#define _RESET          PA4
 #define _SERIAL_        Serial2
 #define _MODEL_         "STM32F103 MAPLE Core"
 
 //for STM32F103(ST Core)
 #elif defined(ARDUINO_BLUEPILL_F103C8) || defined(ARDUINO_BLUEPILL_F103CB)
 HardwareSerial Serial2(PA3, PA2); // RX, TX
+#define _RESET          PA4
 #define _SERIAL_        Serial2
 #define _MODEL_         "BluePill ST Core"
 
 //for STM32F103(ST Core)
 #elif defined(ARDUINO_BLACKPILL_F103C8) || defined(ARDUINO_BLACKPILL_F103CB)
 HardwareSerial Serial2(PA3, PA2); // RX, TX
+#define _RESET          PA4
 #define _SERIAL_        Serial2
 #define _MODEL_         "BlackPill ST Core"
 
 //for STM32F103(ST Core)
 #elif defined(ARDUINO_GENERIC_F103C8TX) || defined(ARDUINO_GENERIC_F103CBTX)
 HardwareSerial Serial1(PA10, PA9); // RX, TX
+#define _RESET          PA11
 #define _SERIAL_        Serial1
 #define _MODEL_         "STM32F103 ST Core"
 
 //for STM32F303(ST Core)
 #elif defined(ARDUINO_BLACKPILL_F303CC)
 HardwareSerial Serial2(PA3, PA2); // RX, TX
+#define _RESET          PA4
 #define _SERIAL_        Serial2
 #define _MODEL_         "STM32F303 ST Core"
 
 //for STM32F401(ST Core)
 #elif defined(ARDUINO_BLACKPILL_F401CC)
 HardwareSerial Serial1(PA10, PA9); // RX, TX 
+#define _RESET          PA11
 #define _SERIAL_        Serial1
 #define _MODEL_         "STM32F401 ST Core"
 
 //for STM32F4DISC1(ST Core)
 #elif defined(ARDUINO_DISCO_F407VG)
 HardwareSerial Serial1(PB7, PB6); // RX, TX
+#define _RESET          PB8
 #define _SERIAL_        Serial1
 #define _MODEL_         "DISC_F407VG ST Core"
 
 //for STM32F407(ST Core)
 #elif defined(ARDUINO_DIYMORE_F407VGT) || defined(ARDUINO_BLACK_F407VE) || defined(ARDUINO_BLACK_F407VG)
 HardwareSerial Serial2(PA3, PA2); // RX, TX
+#define _RESET          PA4
 #define _SERIAL_        Serial2
 #define _MODEL_         "STM32F407 ST Core"
 
 //for STM32 NUCLEO64(ST Core)
 #else
 HardwareSerial Serial1(PA10, PA9); // RX, TX
+#define _RESET          PA11
 #define _SERIAL_        Serial1
 #define _MODEL_         "STM32 NUCLEO64 ST Core"
 
@@ -327,7 +348,6 @@ int executeAT(char * cmd, unsigned char *buf, int timeout) {
   return ret_len; 
 }
 
-
 void hexDump(char *buf, int buf_size) {
   Serial.println();
   Serial.print("buf_size=");
@@ -341,23 +361,40 @@ void hexDump(char *buf, int buf_size) {
   Serial.println();
 }
 
+void hardwareReset(int pin) {
+  digitalWrite(5, HIGH);
+  delay(10);
+  digitalWrite(5, LOW);
+  delay(10);
+  digitalWrite(5, HIGH);
+  delay(10);
+}
+
 void setup() {
   char packet[128];
   int packet_size;
   unsigned char resp[32];
+  int resp_len;
   Serial.begin(115200);
   _SERIAL_.begin(9600);
 
+  pinMode(_RESET, OUTPUT);
+  hardwareReset(_RESET);
+  
   //Query my IP address
-  Serial.println();
-  int resp_len = executeAT("ATMY", resp, 1000);
-  if (resp_len == 0) {
-    Serial.println("Can't get IP address. Check wiring.");
-    while(1);
+  while(1) {
+    Serial.println();
+    resp_len = executeAT("ATMY", resp, 1000);
+    if (resp_len == 0) {
+      Serial.println("Can't get IP address. Check wiring.");
+      while(1);
+    }
+    Serial.print("My IP Address is [");
+    Serial.print((char *)resp);
+    Serial.println("]");
+    if (strcmp((char *)resp, "0.0.0.0")) break;
+    hardwareReset(_RESET);
   }
-  Serial.print("My IP Address is [");
-  Serial.print((char *)resp);
-  Serial.println("]");
 
   //Query my MAC Low address
   Serial.println();

@@ -55,20 +55,23 @@ Global variables use 581 bytes (28%) of dynamic memory, leaving 1467 bytes for l
 
 ### for ATmega328   
 
-XBee WiFi(Tx) - ATmega328(D2)   
-XBee WiFi(Rx) - ATmega328(D3)   
+XBee WiFi(Tx)  - ATmega328(D2)   
+XBee WiFi(Rx)  - ATmega328(D3)   
+XBee WiFi(RST) - ATmega328(D4)   
 
 
 ### for ATmega2560   
 
-XBee WiFi(Tx) - ATmeag2560(D19)   
-XBee WiFi(Rx) - ATmega2560(D18)   
+XBee WiFi(Tx)  - ATmeag2560(D19)   
+XBee WiFi(Rx)  - ATmega2560(D18)   
+XBee WiFi(RST) - ATmega328(D4)   
 
 
 ### for STM32F103(MAPLE Core)   
 
-XBee WiFi(Tx) - STM32F103(PA3)   
-XBee WiFi(Rx) - STM32F103(PA2)   
+XBee WiFi(Tx)  - STM32F103(PA3)   
+XBee WiFi(Rx)  - STM32F103(PA2)   
+XBee WiFi(RST) - STM32F103(PA4)   
 
 MAPLE Core.    
 https://github.com/rogerclarkmelbourne/Arduino_STM32   
@@ -76,8 +79,9 @@ https://github.com/rogerclarkmelbourne/Arduino_STM32
 
 ### for STM32 NUCLEO(ST Core)   
 
-XBee WiFi(Tx) - STM32F103(PA10)   
-XBee WiFi(Rx) - STM32F103(PA9)   
+XBee WiFi(Tx)  - STM32(PA10)   
+XBee WiFi(Rx)  - STM32(PA9)   
+XBee WiFi(RST) - STM32(PA11)   
 
 
 ST Core.    
@@ -86,46 +90,52 @@ https://github.com/stm32duino/Arduino_Core_STM32
 
 ### for STM32 F103 BluePill/BlackPill(ST Core)   
 
-XBee WiFi(Tx) - STM32F103(PA3)   
-XBee WiFi(Rx) - STM32F103(PA2)   
+XBee WiFi(Tx)  - STM32F103(PA3)   
+XBee WiFi(Rx)  - STM32F103(PA2)   
+XBee WiFi(RST) - STM32F103(PA4)   
 
 Serial printing goes to PA9.   
 
 
 ### for STM32 F103 Generic board(ST Core)   
 
-XBee WiFi(Tx) - STM32F103(PA10)   
-XBee WiFi(Rx) - STM32F103(PA9)   
+XBee WiFi(Tx)  - STM32F103(PA10)   
+XBee WiFi(Rx)  - STM32F103(PA9)   
+XBee WiFi(RST) - STM32F103(PA11)   
 
 Serial printing goes to PA9.   
 
 
 ### for STM32 F303CC BlackPill(ST Core)   
 
-XBee WiFi(Tx) - STM32F303(PA3)   
-XBee WiFi(Rx) - STM32F303(PA2)   
+XBee WiFi(Tx)  - STM32F303(PA3)   
+XBee WiFi(Rx)  - STM32F303(PA2)   
+XBee WiFi(RST) - STM32F303(PA4)   
 
 Serial printing goes to PA9.   
 
 
 ### for STM32 F401CC BlackPill(ST Core)    
 
-XBee WiFi(Tx) - STM32F401(PA3)   
-XBee WiFi(Rx) - STM32F401(PA2)   
+XBee WiFi(Tx)  - STM32F401(PA3)   
+XBee WiFi(Rx)  - STM32F401(PA2)   
+XBee WiFi(RST) - STM32F401(PA4)   
 
 Serial printing goes to PA9.   
 
 ### forSTM32 F407VG DISCOVERY(ST Core)   
 
-XBee WiFi(Tx) - STM32F4DISC1(PD9)   
-XBee WiFi(Rx) - STM32F4DISC1(PD8)   
+XBee WiFi(Tx)  - STM32F4DISC1(PB6)   
+XBee WiFi(Rx)  - STM32F4DISC1(PB7)   
+XBee WiFi(RST) - STM32F4DISC1(PB8)   
 
 Serial printing goes to PA2.   
 
 ### for STM32 F407 development board that like DIYMORE F407VGT   
 
-XBee WiFi(Tx) - STM32F407(PA3)   
-XBee WiFi(Rx) - STM32F407(PA2)   
+XBee WiFi(Tx)  - STM32F407(PA3)   
+XBee WiFi(Rx)  - STM32F407(PA2)   
+XBee WiFi(RST) - STM32F407(PA4)   
 
 Serial printing goes to PA9.   
 
