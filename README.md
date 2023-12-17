@@ -33,7 +33,7 @@ Global variables use 581 bytes (28%) of dynamic memory, leaving 1467 bytes for l
 # Hardware requirements   
 - ATmega328/ATmega2560/STM32   
 
-- XBee WiFi module like XBee S6B   
+- Digi XBee WiFi module like XBee S6B   
 
 - Base board like this   
  The RX of this baseboard is connected to the TX of the XBee, and the TX to the RX.   
